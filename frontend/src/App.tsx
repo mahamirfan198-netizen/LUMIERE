@@ -9,7 +9,6 @@ import About from './pages/About';
 import Contact from './pages/Contact';
 import Gallery from './pages/Gallery';
 import WhatsAppButton from './components/WhatsAppButton';
-import Navbar from './components/Navbar';
 
 const queryClient = new QueryClient();
 
