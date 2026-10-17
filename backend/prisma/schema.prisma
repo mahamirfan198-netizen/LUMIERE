@@ -1,0 +1,58 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  name      String
+  role      String   @default("CUSTOMER")
+  createdAt DateTime @default(now())
+}
+
+model ServiceCategory {
+  id       String    @id @default(uuid())
+  name     String    @unique
+  services Service[]
+}
+
+model Service {
+  id          String          @id @default(uuid())
+  name        String
+  description String?
+  price       Int
+  duration    Int
+  imageUrl    String?
+  categoryId  String
+  category    ServiceCategory @relation(fields: [categoryId], references: [id])
+  appointments Appointment[]
+}
+
+model Stylist {
+  id        String   @id @default(uuid())
+  name      String
+  bio       String?
+  imageUrl  String?
+  appointments Appointment[]
+}
+
+model Appointment {
+  id           String   @id @default(uuid())
+  customerName String
+  phone        String
+  email        String?
+  date         DateTime
+  timeSlot     String
+  status       String   @default("PENDING")
+  notes        String?
+  serviceId    String
+  service      Service  @relation(fields: [serviceId], references: [id])
+  stylistId    String?
+  stylist      Stylist? @relation(fields: [stylistId], references: [id])
+  createdAt    DateTime @default(now())
+}
